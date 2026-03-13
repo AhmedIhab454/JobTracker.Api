@@ -19,8 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="DTOs\Auth\" />
-    <Folder Include="DTOs\JobApplication\" />
     <Folder Include="Repositories\Interfaces\" />
     <Folder Include="Services\Interfaces\" />
   </ItemGroup>
