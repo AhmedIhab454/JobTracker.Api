@@ -15,7 +15,7 @@ namespace JobTracker.Api.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Companyname { get; set; } = string.Empty;
+        public string CompanyName { get; set; } = string.Empty;
         [Required]
         public string JobTitle { get; set; } = string.Empty;
         [Required]

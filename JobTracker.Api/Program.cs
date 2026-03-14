@@ -1,12 +1,18 @@
-using FluentValidation;
+
+using JobTracker.Api.Data;
+using JobTracker.Api.Middleware;
+using JobTracker.Api.Repositories;
+using JobTracker.Api.Repositories.Interfaces;
+using JobTracker.Api.Services;
+using JobTracker.Api.Services.Interfaces;
+using JobTracker.Api.Validators.Auth;
+using JobTracker.Api.Validators.JobApplication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using JobTracker.Api.Data;
-using JobTracker.Api.Models;
-using JobTracker.Api.Middleware;
+
 namespace JobTracker.Api
 {
     public class Program
@@ -18,7 +24,20 @@ namespace JobTracker.Api
             // SERVICES — everything registered here is available
             // anywhere in the app via Dependency Injection
             // -------------------------------------------------------
+            // Register FluentValidation validators
+            // Repositories
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IJobApplicationRepository, JobApplicationRepository>();
 
+            // Services
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
+
+            // Validators
+            builder.Services.AddScoped<RegisterDtoValidator>();
+            builder.Services.AddScoped<LoginDtoValidator>();
+            builder.Services.AddScoped<CreateJobApplicationDtoValidator>();
+            builder.Services.AddScoped<UpdateJobApplicationDtoValidator>();
             // Add services to the container.
 
             builder.Services.AddDbContext<AppDbContext>(options =>
@@ -81,10 +100,7 @@ namespace JobTracker.Api
                     }
                 });
             });
-            // -------------------------------------------------------
-            // We will register Services and Repositories here later
-            // as we build them — this is where DI registrations go
-            // -------------------------------------------------------
+     
 
             var app = builder.Build();
             // -------------------------------------------------------
