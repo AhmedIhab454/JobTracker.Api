@@ -1,4 +1,6 @@
-﻿# Job Application Tracker API
+﻿![CI](https://github.com/AhmedIhab454/JobTracker.Api/actions/workflows/ci.yml/badge.svg)
+
+# Job Application Tracker API
 
 A secure REST API for tracking job applications, built with ASP.NET Core 8 and Entity Framework Core.
 Users can register, log in, and manage their own job applications. Each application is private to the 
@@ -36,6 +38,19 @@ Controllers → Services → Repositories → Database
 - FluentValidation — validation rules separated from DTOs
 - Global error handling — all errors return clean, consistent responses
 - Layered architecture — controllers, services, repositories properly separated
+
+## Testing
+
+This project includes a unit test suite built with xUnit and Moq.
+
+- Services are tested in complete isolation using mocked repositories
+- No database required to run the tests
+- 5 tests covering core business logic
+
+To run the tests:
+```bash
+dotnet test
+```
 
 ## Getting Started
 
