@@ -1,0 +1,38 @@
+# Name of the workflow — appears on GitHub Actions tab
+name: CI
+
+# Trigger — run this workflow on every push to master
+# and every pull request targeting master
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build-and-test:
+    # Run on the latest Ubuntu virtual machine
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1 — check out your code so the workflow can access it
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2 — install .NET 8
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      # Step 3 — restore NuGet packages
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # Step 4 — build the solution
+      - name: Build
+        run: dotnet build --no-restore
+
+      # Step 5 — run all tests
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
